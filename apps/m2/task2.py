@@ -14,4 +14,4 @@ soup=BeautifulSoup(content,parser,parse_only=only_a_tags)
 links=soup.find_all('a')
 for link in links:
     print(link)
-print("Number of links:", len(links))
+#print("Number of links:", len(links))
