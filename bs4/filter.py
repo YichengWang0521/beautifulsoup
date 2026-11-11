@@ -682,12 +682,36 @@ class SoupStrainer(ElementFilter):
         return element if self.match(element) else None
 
 class SoupReplacer:
-    def __init__(self, og_tag, alt_tag):
-        self.og_tag = og_tag
-        self.alt_tag = alt_tag
+    def __init__(
+            self,
+            og_tag=None,
+            alt_tag=None,
+            name_xformer=None,
+            attrs_xformer=None,
+            xformer=None
+    ):
+        self.og_tag = og_tag #M2
+        self.alt_tag = alt_tag #M2
+
+        self.name_xformer = name_xformer
+        self.attrs_xformer = attrs_xformer
+        self.xformer = xformer
 
     def replace(self, name):
         if name == self.og_tag:
             return self.alt_tag
         return name
+
+    def transform(self, tag):
+        if self.name_xformer is not None:
+            tag.name = self.name_xformer(tag)
+
+        if self.attrs_xformer is not None:
+            tag.attrs = self.attrs_xformer(tag)
+
+        if self.xformer is not None:
+            self.xformer(tag)
+
+        return tag
+
 

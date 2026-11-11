@@ -1075,6 +1075,10 @@ class BeautifulSoup(Tag):
         if tag is None:
             return tag
 
+        # M3: Transform the Tag during parsing
+        if self.replacer is not None:
+            self.replacer.transform(tag)
+
         tag._soup_replacer_original_name = original_name
         if self._most_recent_element is not None:
             self._most_recent_element.next_element = tag
